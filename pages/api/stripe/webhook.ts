@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: 'E-mail não encontrado' });
     }
 
-    const downloadUrl = process.env.EBOOK_DOWNLOAD_URL;
+    const downloadUrl = process.env.URL_DE_DOWNLOAD_DO_EBOOK;
 
     if (!downloadUrl) {
       console.error('URL de download do ebook não configurada');
