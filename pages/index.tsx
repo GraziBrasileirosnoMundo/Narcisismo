@@ -4,27 +4,8 @@ import { loadStripe } from '@stripe/js';
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function Home() {
-  const handleCheckout = async () => {
-    try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          redirectUrl: `${window.location.origin}/thank-you`,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert('Erro ao criar sessão de checkout');
-      }
-    } catch (error) {
-      console.error('Erro:', error);
-      alert('Erro ao processar');
-    }
+  const handleCheckout = () => {
+    window.location.href = 'https://buy.stripe.com/28E9ATbTI33z6rv6Z76c000';
   };
 
   return (
