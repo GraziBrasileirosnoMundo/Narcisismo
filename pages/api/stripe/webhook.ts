@@ -3,7 +3,6 @@ import { Resend } from 'resend';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export const config = {
   api: {
@@ -62,7 +61,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({ error: 'URL de download não configurada' });
     }
 
+    // Inicializar Resend dentro da função para garantir que as variáveis de ambiente estejam disponíveis
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY não configurada');
+      return res.status(500).json({ error: 'RESEND_API_KEY não configurada' });
+    }
+
     try {
+      console.log(`Tentando enviar email para ${customerEmail}...`);
       const { error } = await resend.emails.send({
         from: 'Grazi <noreply@graziellesilvasoares.com.br>',
         to: customerEmail,
@@ -128,11 +136,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
       if (error) {
-        console.error('Erro ao enviar e-mail:', error);
-        return res.status(500).json({ error: 'Erro no envio do e-mail' });
+        console.error('Erro ao enviar e-mail:', JSON.stringify(error));
+        return res.status(500).json({ error: 'Erro no envio do e-mail', details: error });
       }
 
-      console.log(`✓ E-mail enviado para ${customerEmail}`);
+      console.log(`✓ E-mail enviado com sucesso para ${customerEmail}`);
     } catch (emailError) {
       console.error('Erro ao processar email:', emailError);
       return res.status(500).json({ error: 'Erro ao processar email' });
