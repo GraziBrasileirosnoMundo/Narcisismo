@@ -101,7 +101,7 @@ export default function Home() {
   }
 
   const handleCheckout = () => {
-    window.location.href = 'https://buy.stripe.com/28EeVd0b01ZvdTX3MV6c001';
+    window.location.href = 'https://buy.stripe.com/9B67sL3ncfQlbLPgzH6c003';
   };
 
   return (
