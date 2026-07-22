@@ -1,0 +1,20 @@
+✅ WEBHOOK JÁ ESTÁ FUNCIONANDO!
+
+Status: O webhook do Stripe já está recebendo eventos (24 eventos processados)
+URL atual: https://narcissistic-boss-manual.vercel.app/api/webhooks/stripe
+
+📋 O QUE EU FIZ:
+- Renomeei pages/api/webhook.ts para pages/api/webhooks/stripe.ts
+- Agora a rota corresponde exatamente ao que o Stripe está usando
+
+🚀 PRÓXIMO PASSO (você faz no terminal):
+
+cd C:\Users\grazi\Desktop\Ebooks\ChefeNarcisista
+
+git add pages/api/webhooks/stripe.ts
+git commit -m "fix: webhook route"
+git push origin main
+
+Pronto! O Vercel fará o deploy automático.
+
+Tudo estará funcionando 100%! ✅

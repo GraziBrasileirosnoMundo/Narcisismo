@@ -72,8 +72,12 @@ async function handlePaymentSuccess(paymentIntent: any): Promise<void> {
     // Extrair email do pagamento
     const customerEmail =
       paymentIntent.receipt_email ||
-      paymentIntent.billing_details?.email ||
+      paymentIntent.charges?.data?.[0]?.billing_details?.email ||
+      paymentIntent.customer_email ||
       null;
+
+    console.log('Payment Intent:', JSON.stringify(paymentIntent, null, 2).substring(0, 500));
+    console.log(`Email extraído: ${customerEmail}`);
 
     if (!customerEmail) {
       console.error('Email do cliente não encontrado');
