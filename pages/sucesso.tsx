@@ -13,6 +13,20 @@ export default function SuccessPage({ paymentStatus, customerEmail, sessionId }:
   const [downloading, setDownloading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Adicionar animação de spin ao documento
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => document.head.removeChild(style);
+  }, []);
+
   // Auto-download ao carregar a página
   useEffect(() => {
     if (paymentStatus === 'paid' && sessionId) {
@@ -107,13 +121,25 @@ export default function SuccessPage({ paymentStatus, customerEmail, sessionId }:
             </p>
           )}
 
-          <p style={styles.text}>
-            Seu ebook "Como Lidar com Chefe Narcisista" está sendo preparado para download.
-          </p>
+          {/* Aviso importante para não sair da página */}
+          <div style={styles.warningBox}>
+            <p style={styles.warningTitle}>⚠️ NÃO SAIA DESSA PÁGINA!</p>
+            <p style={styles.warningText}>
+              Seu ebook está sendo preparado para download. Aguarde alguns segundos...
+            </p>
+          </div>
 
           {error && (
             <div style={styles.errorBox}>
               <p style={styles.errorText}>⚠️ {error}</p>
+            </div>
+          )}
+
+          {/* Status do download */}
+          {downloading && (
+            <div style={styles.statusBox}>
+              <div style={styles.spinner}></div>
+              <p style={styles.statusText}>Preparando seu ebook para download...</p>
             </div>
           )}
 
@@ -130,12 +156,15 @@ export default function SuccessPage({ paymentStatus, customerEmail, sessionId }:
           </button>
 
           <p style={styles.hint}>
-            💡 Se o download não iniciar automaticamente, clique no botão acima
+            💡 Se o download não iniciar automaticamente em alguns segundos, clique no botão acima
           </p>
 
-          <button onClick={() => router.push('/')} style={styles.backButton}>
-            Voltar para Inicio
-          </button>
+          {/* Botão para voltar só aparece se não estiver baixando */}
+          {!downloading && (
+            <button onClick={() => router.push('/')} style={styles.backButton}>
+              Voltar para Início
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -265,5 +294,50 @@ const styles = {
     color: 'white',
     margin: 0,
     fontSize: '28px',
+  } as React.CSSProperties,
+  warningBox: {
+    background: '#fff3cd',
+    border: '2px solid #ffc107',
+    borderRadius: '8px',
+    padding: '16px',
+    marginBottom: '20px',
+    borderLeft: '4px solid #ff9800',
+  } as React.CSSProperties,
+  warningTitle: {
+    color: '#ff6b00',
+    margin: '0 0 8px 0',
+    fontSize: '16px',
+    fontWeight: 'bold',
+  } as React.CSSProperties,
+  warningText: {
+    color: '#d84315',
+    margin: 0,
+    fontSize: '14px',
+    lineHeight: '1.5',
+  } as React.CSSProperties,
+  statusBox: {
+    background: '#e8f5e9',
+    border: '1px solid #4caf50',
+    borderRadius: '8px',
+    padding: '20px',
+    marginBottom: '20px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  } as React.CSSProperties,
+  statusText: {
+    color: '#2e7d32',
+    margin: '12px 0 0 0',
+    fontSize: '14px',
+    fontWeight: '500',
+  } as React.CSSProperties,
+  spinner: {
+    width: '30px',
+    height: '30px',
+    border: '3px solid #e0e0e0',
+    borderTop: '3px solid #4caf50',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
   } as React.CSSProperties,
 };
