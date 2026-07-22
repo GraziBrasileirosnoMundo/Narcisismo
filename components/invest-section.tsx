@@ -38,7 +38,7 @@ export function InvestSection() {
             <p className="mt-1 font-display text-6xl font-bold text-gold">R$67</p>
 
             <div className="mt-6">
-              <CtaButton className="w-full" href="https://buy.stripe.com/28EeVd0b01ZvdTX3MV6c001">
+              <CtaButton className="w-full" href="https://buy.stripe.com/8x2eVd1f48nT0371EN6c002">
                 Quero me proteger agora
               </CtaButton>
             </div>
