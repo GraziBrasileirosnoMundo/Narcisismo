@@ -28,7 +28,7 @@ export function Hero() {
           </p>
 
           <div className="mt-8">
-            <CtaButton href="https://buy.stripe.com/28E9ATbTI33z6rv6Z76c000">
+            <CtaButton href="https://buy.stripe.com/28EeVd0b01ZvdTX3MV6c001">
               Quero recuperar meu controle agora
             </CtaButton>
           </div>
