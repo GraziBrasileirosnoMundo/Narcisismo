@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Stripe from 'stripe';
 
 interface SuccessPageProps {
   paymentStatus: 'paid' | 'unpaid' | 'error';
